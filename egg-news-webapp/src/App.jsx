@@ -5,11 +5,8 @@ import Footer from "./components/Footer";
 import CardNoticias from "./components/CardNoticias";
 import PanelAdministrativo from "./components/PanelAdministrativo";
 import Noticias from "./components/Noticias";
-import EliminarNoticia from "./components/EliminarNoticia";
-import CardNoticiascopy from "./components/CardNoticiascopy";
 import DetallarNoticias from "./components/DetallarNoticias";
-
-
+import ListaDeNoticias from "./components/ListaDeNoticias";
 
 
 function App() {
@@ -19,9 +16,9 @@ function App() {
       <Header/>
         <Routes>
         <Route path="/home" element={<CardNoticias/>} />
-        <Route path="/news" element={<Noticias/>} />
-        <Route path="/panel-admin" element={<PanelAdministrativo/>} />
-        <Route path="/panel-admin/delete-news" element={<EliminarNoticia/>} />
+        <Route path="/home/news" element={<Noticias/>} />
+        <Route path="/home/panel-admin/crear-noticia" element={<PanelAdministrativo/>} />
+        <Route path="/home/panel-admin/list-news" element={<ListaDeNoticias/>} />
         <Route path="/home/detallar-noticia" element={<DetallarNoticias/>} />
         </Routes>
       <Footer/>

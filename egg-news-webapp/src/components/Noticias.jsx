@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../assets/Stylemain.css";
+import "../assets/StyleNews.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function CardNoticiascopy() {
-  const baseURL = "http://localhost:8080/news-live/news";
+  const baseUrl = "http://localhost:8080/news-live/news";
 
   const [noticias, setNews] = useState([]);
 
@@ -12,10 +12,22 @@ export default function CardNoticiascopy() {
     cargarNews();
   }, []);
 
+  function formatDate(dateString) {
+    const options = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      hour12: true 
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
   // Metodo asincrono que consume la API, alternativa para la fetch
   const cargarNews = async () => {
     try {
-      const resultado = await axios.get(baseURL);
+      const resultado = await axios.get(baseUrl);
       console.log("Resultado de cargar empleado");
       console.log(resultado.data);
       setNews(resultado.data);
@@ -49,7 +61,7 @@ export default function CardNoticiascopy() {
                 </p>
                 <div>
                   <p className="fecha-publicacion">
-                    Publicada en {new Date().getFullYear()}
+                    Publicada en {formatDate(noticia.fechaPublicacion)}
                   </p>
                   <Link
                     to={"/home/detallar-noticia"}

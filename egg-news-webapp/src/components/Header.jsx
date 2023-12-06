@@ -9,26 +9,15 @@ import IconoPanel from "../assets/IconPanel.svg";
 export default function Header() {
   return (
     <>
-      <header className="header" media="(max-width:800px)">
+      <header className="header">
         <div className="container-logo">
           <Link to={"/home"}>
             <img src={LogoNews} alt="LogoNews" className="LogoNews nav-logo" />
             <h1 className="title-newsLive">News Live</h1>
           </Link>
         </div>
-        <div>
-          <form className="d-flex">
-            <input
-              className="form-control me-sm-2"
-              type="search"
-              placeholder="Buscar"
-            />
-            <button className="btn btn-secondary my-2 my-sm-0" type="submit">
-              Buscar
-            </button>
-          </form>
-        </div>
       </header>
+
       <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div className="container-fluid">
           <button
@@ -51,7 +40,10 @@ export default function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/news"} className="nav-news-link nav-link active">
+                <Link
+                  to={"/home/news"}
+                  className="nav-news-link nav-link active"
+                >
                   <img
                     src={IconoNews}
                     alt="IconoNews"
@@ -60,7 +52,7 @@ export default function Header() {
                   Noticias
                 </Link>
               </li>
-              <Link to={"/panel-admin"}>
+              <Link to={"/home/panel-admin"}>
                 <li className="nav-item dropdown">
                   <div
                     className="nav-link dropdown-toggle active"
@@ -69,19 +61,24 @@ export default function Header() {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <img src={IconoAdmin} alt="IconoAdmin" /> Administracion
+                    <img src={IconoAdmin} alt="IconoAdmin" /> Panel de
+                    administracion
                   </div>
+
                   <div className="dropdown-menu">
-                    <div className="dropdown-item">
-                      <img src={IconoPanel} alt="IconoPanel" />
-                      Panel administrativo
-                    </div>
                     <Link
-                      to={"/panel-admin/delete-news"}
-                      className="dropdown-item dropdown-item"
+                      to={"/home/panel-admin/crear-noticia"}
+                      className="dropdown-item"
                     >
                       <img src={IconoPanel} alt="IconoPanel" />
-                      Eliminar noticia
+                      Crear noticia
+                    </Link>
+                    <Link
+                      to={"/home/panel-admin/list-news"}
+                      className="dropdown-item"
+                    >
+                      <img src={IconoPanel} alt="IconoPanel" />
+                      Listado de noticias
                     </Link>
                   </div>
                 </li>
@@ -90,6 +87,19 @@ export default function Header() {
           </div>
         </div>
       </nav>
+      <div className="form-search">
+        <form className="d-flex">
+          <input
+            className="input-buscar form-control me-sm-2 "
+            type="search"
+            placeholder="Buscar noticia"
+          />
+          <button className="btn btn-secondary my-2 my-sm-0" type="submit">
+            Buscar
+          </button>
+        </form>
+      </div>
+
     </>
   );
 }

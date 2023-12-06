@@ -1,8 +1,12 @@
 package com.eggnews.noticias.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +37,7 @@ public class NoticiaController {
         news.setCuerpo(newsRequestDTO.getCuerpo());
         news.setImageUrl(newsRequestDTO.getImageUrl());
         news.setCategoria(newsRequestDTO.getCategoria().toUpperCase());
+        news.setFechaPublicacion(newsRequestDTO.getFechaPublicacion());
 
         return noticiasService.guardarNoticia(news);
     }
@@ -44,9 +49,23 @@ public class NoticiaController {
     }
 
     // http://localhost:8080/news-live/delete-news/ID
+    // @DeleteMapping("/delete-news/{id}")
+    // public void borrarNoticiaPorId(@PathVariable Long id) {
+    // noticiasService.borrarNoticia(id);
+    // }
+
     @DeleteMapping("/delete-news/{id}")
-    public void borrarNoticiaPorId(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Boolean>> borrarNoticia(@PathVariable Long id) {
+        News news = noticiasService.buscarNoticiaPorId(id);
+        if (news == null) {
+            throw new NoSuchElementException("El id recibido no existe: " + id);
+        }
         noticiasService.borrarNoticia(id);
+        // JSON: {"eliminado": "true"}
+        Map<String, Boolean> respuesta = new HashMap<>();
+        respuesta.put("eliminado", Boolean.TRUE);
+
+        return ResponseEntity.ok(respuesta);
     }
 
     // http://localhost:8080/news-live/news/ID
@@ -65,6 +84,7 @@ public class NoticiaController {
             noticiaExistente.setCuerpo(newsRequestDTO.getCuerpo());
             noticiaExistente.setImageUrl(newsRequestDTO.getImageUrl());
             noticiaExistente.setCategoria(newsRequestDTO.getCategoria().toUpperCase());
+            noticiaExistente.setFechaPublicacion(newsRequestDTO.getFechaPublicacion());
 
             return noticiasService.actualizarNoticia(noticiaExistente);
         } else {
@@ -73,7 +93,5 @@ public class NoticiaController {
             return null;
         }
     }
-
-    
 
 }
